@@ -1,0 +1,28 @@
+{% extends "index.html" %}
+
+{% block main %}
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="column is-6 is-offset-3">
+                <h1 class="title">
+                    Link zur Terminvereinbarung versandt.
+                </h1>
+                <div class="box">
+                    <p>
+                        Es wurde ein Link zur Terminvereinbarung an <b>{{ candidate.email }}</b> versandt.
+                    </p>
+                    <p>
+                        Bitte prüfen Sie Ihren Posteingang und ggf. den Spam-Ordner.
+                    </p>
+                </div>
+                <div class="box">
+                    <p>
+                        Falls keine Nachricht eingeht, versuchen Sie es zuerst ein <a class="high-link" href="/personal">zweites Mal</a>.
+                        Falls das Problem bestehen bleibt, melden Sie sich bitte per
+                        <a class="high-link" href="mailto:corona-impfung@klinikum-stuttgart.de">Email</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

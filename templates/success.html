@@ -1,0 +1,48 @@
+{% extends "index.html" %}
+{% block main %}
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="column is-12">
+                <div class="notification is-success">
+                    Daten wurden gespeichert. Sie werden informiert, sobald ein Termin für Sie verfügbar ist.
+                </div>
+                <h1 class="title">
+                    Verfügbarkeit für {{ candidate.first_name }} {{ candidate.last_name }}
+                </h1>
+                <div class="notification is-warning">
+                    Indikation: {{ candidate.reason }}
+                </div>
+                <div class="box">
+                    <div class="field">
+                        <table class="table width100 table-layout-fixed is-striped">
+                            <thead>
+                            <tr>
+                                <th>
+                                </th>
+                                {% for day in days %}
+                                    <th>{{ day }}</th>
+                                {% endfor %}
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for i, start in enumerate(begin_times) %}
+                                <tr>
+                                    <th>{{ start }}</th>
+                                    {% for j, day in enumerate(days) %}
+                                        <td><input type="checkbox" name="{{ i }}-{{ j }}" disabled
+                                                {% if availability_matrix[i][j] %}
+                                                   checked
+                                                {% endif %}
+                                        ></td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

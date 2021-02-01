@@ -1,0 +1,53 @@
+{% extends "index.html" %}
+{% block main %}
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="column is-6 is-offset-3">
+                <h1 class="title">
+                    Impfzentrum Klinikum Stuttgart
+                </h1>
+                <div class="box">
+                    <form method="POST">
+                        {% if appointment.rejected %}
+                            <div class="notification is-danger">
+                                Dieser Termin wurde storniert.
+                            </div>
+                        {% else %}
+                            {% if appointment.confirmed %}
+                                <div class="notification is-success">
+                                    Ihr Termin am {{ appointment.slot.strftime('%d.%m.%Y um %H:%M Uhr') }} ist bestätigt. Wir freuen uns, Sie im
+                                    Impfzentrum Klinikum Stuttgart begrüßen zu dürfen.
+                                </div>
+                            {% else %}
+                                <div class="notification is-warning">
+                                    <p>
+                                        Bitte bestätigen Sie Ihren Termin am {{ appointment.slot.strftime('%d.%m.%Y um %H:%M Uhr') }}.
+                                    </p>
+                                    <p>&nbsp;</p>
+                                    <p>
+                                        Falls der Termin für Sie nicht möglich ist, wird Ihnen ein neuer Termin passend zu Ihrer Verfügbarkeit
+                                        vorgeschlagen.
+                                    </p>
+                                </div>
+                                <div class="field">
+                                    <p class="control width100">
+                                        <button class="button is-info width100" type="submit" name="submit" value="confirm">
+                                            Termin bestätigen
+                                        </button>
+                                    </p>
+                                </div>
+                            {% endif %}
+                            <div class="field">
+                                <p class="control width100">
+                                    <button class="button is-info width100" type="submit" name="submit" value="reject">
+                                        Termin stornieren, Sie werden einen neuen Termin vorgeschlagen bekommen
+                                    </button>
+                                </p>
+                            </div>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

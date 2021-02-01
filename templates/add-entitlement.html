@@ -1,0 +1,40 @@
+{% extends "index.html" %}
+{% block main %}
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="column is-6 is-offset-3">
+                <h1 class="title">
+                    Impftermine Covid-19
+                </h1>
+                <h2 class="subtitle">
+                    am Impfzentrum Klinikum Stuttgart in der Liederhalle
+                </h2>
+                <div class="box">
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="notification is-warning">
+                            Der Berechtigungscode wurde nicht gefunden. Bitte geben Sie hier Ihren Berechtigungscode erneut ein:
+                        </div>
+                        <div class="field">
+                            <label class="label">Berechtigungscode</label>
+                            {{ form.entitlement(class='input center', placeholder='F4KG-H4FJ-F3TG', maxlength='14', required='') }}
+                        </div>
+                        {% if form.entitlement.errors or no_entitlement %}
+
+                            <div class="notification is-danger">
+                                Bitte überprüfen Sie die Eingabe des Berechtigungscodes.
+                            </div>
+                        {% endif %}
+                        <div class="field">
+                            <p class="control width100">
+                                <button class="button is-info width100" type="submit">
+                                    Berechtigungscode überprüfen
+                                </button>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

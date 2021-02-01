@@ -1,0 +1,128 @@
+{% extends "index.html" %}
+{% block main %}
+    <script>
+        let set_day = function (day, value) {
+            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].forEach(y => document.getElementsByName(y + '-' + day).forEach(x => x.checked = value));
+        };
+        let set_hour = function (hour, value) {
+            [0, 1, 2, 3, 4, 5, 6].forEach(y => document.getElementsByName(hour + '-' + y).forEach(x => x.checked = value));
+        };
+        let set_all = function (value) {
+            [0, 1, 2, 3, 4, 5, 6].forEach(y => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].forEach(
+                x => document.getElementsByName(x + '-' + y).forEach(x => x.checked = value)
+            ));
+        };
+    </script>
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="column is-12">
+                <h1 class="title">
+                    Bitte geben Sie Ihre Verfügbarkeit an
+                </h1>
+                {% if data_stored %}
+                    <div class="notification is-warning">
+                        Daten wurden gespeichert. Sie werden informiert, sobald ein Termin für Sie verfügbar ist.
+                    </div>
+                {% endif %}
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="box">
+                        <div class="field">
+                            <label class="label">Vorname</label>
+                            {{ form.first_name(class='input center', placeholder='Vorname', maxlength='254', required='') }}
+                        </div>
+                        {% if form.first_name.errors %}
+
+                            <div class="notification is-danger">
+                                Bitte geben Sie Ihren Vornamen an.
+                            </div>
+                        {% endif %}
+                        <div class="field">
+                            <label class="label">Nachname</label>
+                            {{ form.last_name(class='input center', placeholder='Nachname', maxlength='254', required='') }}
+                        </div>
+                        {% if form.last_name.errors %}
+
+                            <div class="notification is-danger">
+                                Bitte geben Sie Ihren Nachnamen an.
+                            </div>
+                        {% endif %}
+                        <div class="field">
+                            <label class="label">Grund für Zugehörigkeit zur Gruppe mit der höchsten Priorität</label>
+                            {{ form.reason(class='input center', placeholder='z.B. Pflegekraft auf Covid-Station oder Arzt auf onkologischer Station', maxlength='512', required='') }}
+                        </div>
+                        {% if form.first_name.errors %}
+
+                            <div class="notification is-danger">
+                                Bitte geben Sie den Grund für die Zugehörigkeit zur Gruppe mit der höchsten Priorität an,
+                                z.B. "Pflegekraft auf Covid-Station".
+                            </div>
+                        {% endif %}
+                        <div class="notification is-warning">
+                            Sie können die Verfügbarkeit jederzeit über den Link, welchen Sie per Email erhalten haben, anpassen.
+                            Jeder Platz eines Kontigents wird sepearat ausgelost, daher steigt die Chance auf einen kurzfristigen Termin,
+                            wenn Sie an mehr Terminen verfügbar sind.
+                        </div>
+                        <div class="field">
+                            <table class="table width100 table-layout-fixed is-striped">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        <button type="button" class="button is-small is-primary" onclick="set_all(true)">Alle</button>
+                                        <button type="button" class="button is-small is-danger" onclick="set_all(false)">Keine</button>
+                                    </th>
+                                    {% for day in days %}
+                                        <th>{{ day }}</th>
+                                    {% endfor %}
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for i, start in enumerate(begin_times) %}
+                                    <tr>
+                                        <th>{{ start }}</th>
+                                        {% for j, day in enumerate(days) %}
+                                            <td><input type="checkbox" name="{{ i }}-{{ j }}"
+                                                    {% if availability_matrix[i][j] %}
+                                                       checked
+                                                    {% endif %}
+                                            ></td>
+                                        {% endfor %}
+                                        <td>
+                                            <button type="button" class="button is-small is-primary" onclick="set_hour({{ i }}, true)">Alle</button>
+                                            <button type="button" class="button is-small is-danger" onclick="set_hour({{ i }}, false)">Keine</button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th></th>
+                                    {% for j, day in enumerate(days) %}
+                                        <th>
+                                            <div>
+                                                <button type="button" class="button is-small is-primary" onclick="set_day({{ j }}, true)">Alle</button>
+                                            </div>
+                                            <div class="top-margin-small">
+                                                <button type="button" class="button is-small is-danger" onclick="set_day({{ j }}, false)">Keine</button>
+                                            </div>
+                                        </th>
+                                    {% endfor %}
+                                    <th></th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="field">
+                            <p class="control width100">
+                                <button class="button is-info width100" type="submit">
+                                    Speichern
+                                </button>
+                            </p>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

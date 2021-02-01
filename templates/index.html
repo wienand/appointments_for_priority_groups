@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Terminvereinbarung für priorisierte Gruppen - Impfzentrum Klinikum Stuttgart</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/vendor/font-awesome.min.css">
+    <!-- Bulma Version 0.9.x-->
+    <link rel="stylesheet" href="/vendor/bulma.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/main.css">
+    {% block head %}{% endblock %}
+    <!-- Template from https://bulmatemplates.github.io/bulma-templates/ (MIT License) -->
+</head>
+
+<body>
+<section class="hero is-info is-fullheight">
+    <div class="hero-head">
+        <nav class="navbar">
+            <div class="container">
+                <div id="navbarMenu" class="navbar-menu">
+                    <div class="navbar-end">
+                        <span class="navbar-item">
+                            <a class="button is-white is-outlined" href="https://www.klinikum-stuttgart.de/aktuell-im-klinikum/presse/zentrales-impfzentrum" target="_blank">
+                                <span class="icon">
+                                    <i class="fa fa-home"></i>
+                                </span>
+                                <span>Impfzentrum</span>
+                            </a>
+                        </span>
+                        <span class="navbar-item">
+                                <a class="button is-white is-outlined" href="https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/nCoV_node.html" target="_blank">
+                                    <span class="icon">
+                                        <i class="fa fa-superpowers"></i>
+                                    </span>
+                                    <span>Information zu Covid-19</span>
+                                </a>
+                            </span>
+                        <span class="navbar-item">
+                                <a class="button is-white is-outlined" href="#help">
+                                    <span class="icon">
+                                        <i class="fa fa-book"></i>
+                                    </span>
+                                    <span>Hilfe</span>
+                                </a>
+                            </span>
+                        <span class="navbar-item">
+                                <a class="button is-white is-outlined" href="https://github.com/wienand/appointments_for_priority_groups" target="_blank">
+                                    <span class="icon">
+                                        <i class="fa fa-github"></i>
+                                    </span>
+                                    <span>View Source</span>
+                                </a>
+                            </span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    {% block main %}
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <div class="column is-6 is-offset-3">
+                    <h1 class="title">
+                        Impftermine Covid-19
+                    </h1>
+                    <h2 class="subtitle">
+                        am Impfzentrum Klinikum Stuttgart in der Liederhalle
+                    </h2>
+                    <div class="box">
+                        <form method="POST">
+                            {{ form.hidden_tag() }}
+                            <div class="field">
+                                <label class="label">Berechtigungscode</label>
+                                {{ form.entitlement(class='input center', placeholder='F4KG-H4FJ-F3TG', maxlength='14', required='') }}
+                            </div>
+                            {% if form.entitlement.errors or no_entitlement %}
+
+                                <div class="notification is-danger">
+                                    Bitte überprüfen Sie die Eingabe des Berechtigungscodes.
+                                </div>
+                            {% endif %}
+                            <div class="field">
+                                <label class="label">Emailadresse</label>
+                                <p class="control is-expanded">
+                                    {{ form.email(class='input center', placeholder='muster@example.com', required='') }}
+                                </p>
+                            </div>
+                            {% if form.email.errors or no_email %}
+                                <div class="notification is-danger">
+                                    Bitte überprüfen Sie die Eingabe der Emailadresse oder Mobilfunknummer.
+                                </div>
+                            {% endif %}
+                            <div class="notification is-warning">
+                                Bitte beachten Sie, dass eine Impfung aktuell nur als Mitglied der Gruppe mit höchster Priorität (§2) der
+                                <a href="http://www.gesetze-im-internet.de/coronaimpfv/__2.html" target="_blank">CoronaImpfV</a>
+                                möglich ist.
+                            </div>
+                            <div class="field">
+                                <p class="control width100">
+                                    <button class="button is-info width100" type="submit">
+                                        Link zur Terminanfrage per Email senden
+                                    </button>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+</section>
+
+<footer class="footer ssr-footer-padding" id="help">
+    <div class="content has-text-centered">
+        <p>
+            Bei Fragen oder Problemen wenden Sie sich bitte an
+            <a href="mailto:corona-impfung@klinikum-stuttgart.de">corona-impfung@klinikum-stuttgart.de</a>.
+        </p>
+        <p>
+            <strong>Built with and a lot of thanks to </strong>
+            <a target="_blank" href="https://python.org">python</a>,
+            <a target="_blank" href="https://flask.palletsprojects.com">flask</a>,
+            <a target="_blank" href="https://www.sqlalchemy.org">sqlalchemy</a>,
+            <a target="_blank" href="https://www.sqlite.org">sqlite</a>,
+            <a target="_blank" href="https://fontawesome.com">font awesome</a>,
+            <a target="_blank" href="https://bulma.io">bulma.io</a> and
+            <a target="_blank" href="https://github.com/wienand/appointments_for_priority_groups#build-with-and-a-lot-of-thanks-to">others</a>.
+        </p>
+        <p>
+            <a target="_blank" href="https://www.klinikum-stuttgart.de/impressum/">Impressum</a> /
+            <a target="_blank" href="https://www.klinikum-stuttgart.de/datenschutz/">Datenschutz</a>
+        </p>
+    </div>
+</footer>
+</body>
+{% block after_body %}{% endblock %}
+</html>
